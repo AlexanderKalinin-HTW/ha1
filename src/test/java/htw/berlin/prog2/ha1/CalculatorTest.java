@@ -155,7 +155,7 @@ class CalculatorTest {
     }
 
     @Test
-    @DisplayName("should display result after pressing Equals after pressing a number")
+    @DisplayName("should display pressed Number after pressing Equals without using Operator")
     void testPressEqualsWithoutOperator() {
         Calculator calc = new Calculator();
 
