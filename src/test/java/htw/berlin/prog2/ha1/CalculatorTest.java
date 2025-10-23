@@ -128,13 +128,12 @@ class CalculatorTest {
         Calculator calc = new Calculator();
 
         calc.pressDigitKey(2);
-        calc.pressDigitKey(0);
+        calc.pressDigitKey(5);
         calc.pressBinaryOperationKey("/");
-        calc.pressDigitKey(1);
-        calc.pressDigitKey(0);
+        calc.pressDigitKey(5);
         calc.pressEqualsKey();
 
-        String expected = "2";
+        String expected = "5";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
@@ -163,6 +162,61 @@ class CalculatorTest {
         calc.pressEqualsKey();
 
         String expected = "2";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should display a maximum of 9 Digits")
+    void testMaxDigitEquals9() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDigitKey(9);
+        calc.pressDotKey();
+        calc.pressDigitKey(9);
+
+        String expected = "99999999.9";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should display 0. when pressing Dotkey after Using an Inversion, Square Root or Percent")
+    void testPressDotAfterInversion() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(3);
+        calc.pressUnaryOperationKey("1/x");
+
+        calc.pressDotKey();
+
+        String expected = "0.";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should repeat the last Binary Operation if the Equals Key ist pressed again")
+    void testPressEqualsMultipleTimes() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(9);
+        calc.pressBinaryOperationKey("x");
+        calc.pressDigitKey(9);
+        calc.pressEqualsKey();
+        calc.pressEqualsKey();
+
+        String expected = "729";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
